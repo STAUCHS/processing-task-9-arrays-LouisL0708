@@ -1,5 +1,11 @@
 import processing.core.PApplet;
 
+/**
+* A that makes a dodging game.
+* @author: L.Lam
+*
+*/
+
 public class Sketch extends PApplet {
 
   float[] snowX = new float[42];
@@ -14,6 +20,12 @@ public class Sketch extends PApplet {
     size(400, 400);
   }
 
+    /**
+  * background and random snow genrator
+  * 
+  */
+
+  
   public void setup() {
     background(0);
 
@@ -26,12 +38,22 @@ public class Sketch extends PApplet {
     }
   }
 
+   /**
+  * Draws snowballs, player circle and lives squares
+  * 
+  */
+  
   public void draw() {
     background(0);
     snow();
     player();
     drawLives();
   }
+
+   /**
+  * generates snowballs, fall speed
+  * 
+  */
 
   public void snow() {
     for (int i = 0; i < snowX.length; i++) {
@@ -68,12 +90,22 @@ public class Sketch extends PApplet {
     }
   }
 
+    /**
+  * Draws player circle 
+  * 
+  */
+
   public void player() {
 
     // Draw player
     fill(0, 0, 255); 
     circle(playerX, playerY, playerSize);
   }
+
+     /**
+  * Draws and generate lives square 
+  * 
+  */
 
   public void drawLives() {
 
@@ -83,6 +115,11 @@ public class Sketch extends PApplet {
       square(width - 30 - i * 30, 10, 20); 
     }
   }
+
+    /**
+  * make it so that circle dissapears after clicked 
+  * 
+  */
 
   public void mousePressed() {
 
@@ -95,6 +132,12 @@ public class Sketch extends PApplet {
     }
   }
 
+
+    /**
+  * Control Keys 
+  * 
+  */
+  
   public void keyPressed() {
 
     // Controlls
