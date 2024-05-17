@@ -8,7 +8,7 @@ public class Sketch extends PApplet {
   float speed = 6;
   float playerX, playerY;
   int playerSize = 20;
-  int lives = 24342;
+  int lives = 3;
 
   public void settings() {
     size(400, 400);
