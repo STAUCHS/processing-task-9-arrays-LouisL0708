@@ -8,13 +8,13 @@ import processing.core.PApplet;
 
 public class Sketch extends PApplet {
 
-  float[] snowX = new float[42];
-  float[] snowY = new float[42];
-  int snowDiameter = 20;
-  float speed = 6;
-  float playerX, playerY;
-  int playerSize = 20;
-  int lives = 3;
+  float[] fltSnowX = new float[42];
+  float[] fltSnowY = new float[42];
+  int[] intSnowDiameter = new int[42];
+  float fltSpeed = 6;
+  float fltPlayerX, fltPlayerY;
+  int intPlayerSize = 20;
+  int intLives = 3;
 
   public void settings() {
     size(400, 400);
@@ -29,17 +29,18 @@ public class Sketch extends PApplet {
   public void setup() {
     background(0);
 
-    playerX = width / 2;
-    playerY = height - 50;
+    fltPlayerX = width / 2;
+    fltPlayerY = height - 50;
 
-    for (int i = 0; i < snowX.length; i++ ) {
-      snowX[i] = random(width);
-      snowY[i] = random(-height, 0); 
+    for (int i = 0; i < fltSnowX.length; i++ ) {
+      fltSnowX[i] = random(width);
+      fltSnowY[i] = random(-height, 0); 
+      intSnowDiameter[i] = 20;
     }
   }
 
    /**
-  * Draws snowballs, player circle and lives squares
+  * Draws snowballs, player circle and intLives squares
   * 
   */
   
@@ -47,40 +48,43 @@ public class Sketch extends PApplet {
     background(0);
     snow();
     player();
-    drawLives();
+    drawintLives();
   }
 
    /**
-  * generates snowballs, fall speed
+  * generates snowballs, fall Speed
   * 
   */
 
   public void snow() {
-    for (int i = 0; i < snowX.length; i++) {
-      if (snowX[i] != -1 && snowY[i] != -1) {
+    for (int i = 0; i < fltSnowX.length; i++) {
+      if (fltSnowX[i] != -1 && fltSnowY[i] != -1) {
 
         // Draw snowballs
         noStroke();
         fill(255); 
-        circle(snowX[i], snowY[i], snowDiameter);
+        circle(fltSnowX[i], fltSnowY[i], intSnowDiameter[i]);
 
-        snowY[i] += speed;
-        if (snowY[i] > height){
-          snowY[i] = random(-height, 0); 
-          snowX[i] = random(width); // Randomize x position
+        fltSnowY[i] += fltSpeed;
+        if (fltSnowY[i] > height){
+          fltSnowY[i] = random(-height, 0); 
+          fltSnowX[i] = random(width); // Randomize x position
+          intSnowDiameter[i] = 20;
         }
 
         // Check collision with player
-        if (dist(snowX[i], snowY[i], playerX, playerY) < snowDiameter / 2 + playerSize / 2) {
-          lives--; 
-          snowY[i] = random(-height, 0);
-          snowX[i] = random(width); // Randomize x position
+        if (dist(fltSnowX[i], fltSnowY[i], fltPlayerX, fltPlayerY) < intSnowDiameter[i] / 2 + intPlayerSize / 2) {
+          intSnowDiameter[i] = 0;
+          intLives--; 
+          fltSnowY[i] = random(-height, 0);
+          fltSnowX[i] = random(width); // Randomize x position
+         
         }
       }
     }
 
     // Check for game over
-    if (lives <= 0) {
+    if (intLives <= 0) {
       background(255); 
       textSize(32);
       fill(0);
@@ -99,19 +103,19 @@ public class Sketch extends PApplet {
 
     // Draw player
     fill(0, 0, 255); 
-    circle(playerX, playerY, playerSize);
+    circle(fltPlayerX, fltPlayerY, intPlayerSize);
   }
 
      /**
-  * Draws and generate lives square 
+  * Draws and generate intLives square 
   * 
   */
 
-  public void drawLives() {
+  public void drawintLives() {
 
     // Draw live squares
     fill(255, 0, 100); 
-    for (int i = 0; i < lives; i++) {
+    for (int i = 0; i < intLives; i++) {
       square(width - 30 - i * 30, 10, 20); 
     }
   }
@@ -124,10 +128,9 @@ public class Sketch extends PApplet {
   public void mousePressed() {
 
     // Move the snowflake off-screen when circle is clicked
-    for (int i = 0; i < snowX.length; i++) {
-      if (dist(mouseX, mouseY, snowX[i], snowY[i]) < snowDiameter / 2) {
-        snowX[i] = -1; 
-        snowY[i] = -1; 
+    for (int i = 0; i < fltSnowX.length; i++) {
+      if (dist(mouseX, mouseY, fltSnowX[i], fltSnowY[i]) < intSnowDiameter[i] / 2) {
+        intSnowDiameter[i] =0; 
       }
     }
   }
@@ -142,19 +145,19 @@ public class Sketch extends PApplet {
 
     // Controlls
     if (key == 'a') {
-      playerX -= 10;
+      fltPlayerX -= 10;
     } else if (key == 'd') {
-      playerX += 10;
+      fltPlayerX += 10;
     } else if (key == 'w') {
-      playerY -= 10;
+      fltPlayerY -= 10;
     } else if (key == 's') {
-      playerY += 10;
+      fltPlayerY += 10;
     } else if (key == '3') {
-      speed = 15;
+      fltSpeed = 15;
     } else if (key == '1') {
-      speed = 2;
+      fltSpeed = 2;
     } else if (key == '2') {
-      speed = 6;
+      fltSpeed = 6;
     }
   }
 }
